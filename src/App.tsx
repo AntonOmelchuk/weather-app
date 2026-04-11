@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { fetchWeatherData } from "./api";
+import Card from "./components/cards/Card";
+import DailyForecast from "./components/cards/DailyForecast";
 
 const App = () => {
   const { data } = useQuery({
@@ -11,13 +13,9 @@ const App = () => {
   return (
     <>
       <h1>Welcome to Weather App!</h1>
-      {data && (
-        <div>
-          <h2>Current Weather</h2>
-          <p>Temperature: {data.current.temp}°C</p>
-          <p>Humidity: {data.current.humidity}%</p>
-        </div>
-      )}
+      <Card title="Current Weather">{data?.current.temp}</Card>
+      <Card title="Hourly Forecast">{data?.current.humidity}</Card>
+      <DailyForecast />
     </>
   );
 };
