@@ -10,3 +10,12 @@ export const formatDateToHour = (timestamp: number): string => {
     minute: "2-digit",
   });
 };
+
+export const getLocalTime = (timeZone: string, dt: number) => {
+  return new Intl.DateTimeFormat("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+    timeZone,
+  }).format(new Date(dt * 1000));
+};
