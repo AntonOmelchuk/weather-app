@@ -13,7 +13,7 @@ const CurrentWeather = () => {
 
   const { current } = data || {};
 
-  if (!current) {
+  if (!current || !data) {
     return (
       <Card
         title="Current Weather"

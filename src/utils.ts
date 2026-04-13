@@ -1,3 +1,5 @@
+import Arrow from "./assets/arrow.svg?react";
+
 export const formatDateToDay = (timestamp: number): string => {
   const date = new Date(timestamp * 1000);
   return date.toLocaleDateString("en-US", { weekday: "long" });
@@ -18,4 +20,30 @@ export const getLocalTime = (timeZone: string, dt: number) => {
     hour12: true,
     timeZone,
   }).format(new Date(dt * 1000));
+};
+
+export const formatAddInfoData = (
+  data: number,
+  type: "uvi" | "sunrise" | "sunset" | "clouds" | "wind_deg" | "pressure",
+) => {
+  if (type === "uvi") {
+    return data.toString();
+  }
+
+  if (type === "clouds") {
+    return `${data}%`;
+  }
+
+  if (type === "wind_deg") {
+    return Arrow({
+      style: { transform: `rotate(${data}deg)` },
+      className: "size-4 invert",
+    });
+  }
+
+  if (type === "pressure") {
+    return `${data} hPa`;
+  }
+
+  return getLocalTime("UTC", data);
 };
