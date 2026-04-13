@@ -12,6 +12,7 @@ const Map = ({ coordinates, onMapClick }: Props) => {
 
   return (
     <MapContainer
+      key={`${lat}-${lon}`} // Додаємо ключ для примусового оновлення карти при зміні координат
       center={[lat, lon]}
       zoom={5}
       style={{
@@ -20,6 +21,7 @@ const Map = ({ coordinates, onMapClick }: Props) => {
         margin: "0 auto",
         borderRadius: "8px",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        zIndex: 10,
       }}
     >
       <MapClick onMapClick={onMapClick} />

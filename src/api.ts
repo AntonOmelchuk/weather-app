@@ -1,4 +1,5 @@
-import { type OpenWeather, OpenWeatherSchema } from "./schemes/weatherScheme";
+import { GeocodeSchema } from "./schemes/geocodeSchema";
+import { type OpenWeather, OpenWeatherSchema } from "./schemes/weatherSchema";
 
 const apiKey = import.meta.env.VITE_OPENWEATHERMAP_API_KEY;
 
@@ -19,4 +20,21 @@ export const fetchWeatherData = async ({
 
   const data = await response.json();
   return OpenWeatherSchema.parse(data);
+};
+
+export const getGeocode = async (location: string) => {
+  const response = await fetch(
+    `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${apiKey}`,
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch geocode data");
+  }
+
+  const data = await response.json();
+  if (data.length === 0) {
+    throw new Error("Location not found");
+  }
+
+  return GeocodeSchema.parse(data[0]);
 };

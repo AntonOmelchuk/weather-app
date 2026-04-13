@@ -89,5 +89,4 @@ export const OpenWeatherSchema = z.object({
   daily: z.array(DailyWeatherSchema),
 });
 
-// Типізація на основі схеми
 export type OpenWeather = z.infer<typeof OpenWeatherSchema>;
