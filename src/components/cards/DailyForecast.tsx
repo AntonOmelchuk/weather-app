@@ -5,10 +5,16 @@ import { formatDateToDay } from "../../utils";
 import Card from "./Card";
 import WeatherIcon from "./WeatherIcon";
 
-const DailyForecast = () => {
+type Props = {
+  coordinates: { lat: number; lon: number };
+};
+
+const DailyForecast = ({ coordinates }: Props) => {
+  const { lat, lon } = coordinates;
+
   const { data } = useQuery({
-    queryKey: ["weatherData"],
-    queryFn: () => fetchWeatherData({ lat: 50, lon: 50 }),
+    queryKey: ["weather", lat, lon],
+    queryFn: () => fetchWeatherData({ lat, lon }),
   });
 
   const { daily } = data || {};

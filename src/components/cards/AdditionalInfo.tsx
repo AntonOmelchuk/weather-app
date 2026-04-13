@@ -10,6 +10,10 @@ import Wind from "../../assets/wind.svg?react";
 import { formatAddInfoData } from "../../utils";
 import Card from "./Card";
 
+type Props = {
+  coordinates: { lat: number; lon: number };
+};
+
 const rows = [
   { label: "Cloudiness", value: "clouds", Icon: Cloud },
   { label: "UV Index", value: "uvi", Icon: Uv },
@@ -19,10 +23,12 @@ const rows = [
   { label: "Sunset", value: "sunset", Icon: Sunset },
 ] as const;
 
-const AdditionalInfo = () => {
+const AdditionalInfo = ({ coordinates }: Props) => {
+  const { lat, lon } = coordinates;
+
   const { data } = useQuery({
-    queryKey: ["weatherData"],
-    queryFn: () => fetchWeatherData({ lat: 50, lon: 50 }),
+    queryKey: ["weather", lat, lon],
+    queryFn: () => fetchWeatherData({ lat, lon }),
   });
 
   const { current } = data || {};
