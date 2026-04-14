@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { ADDITIONAL_INFO_ROWS } from "@/constants";
 
@@ -13,7 +13,7 @@ type Props = {
 const AdditionalInfo = ({ coordinates }: Props) => {
   const { lat, lon } = coordinates;
 
-  const { data } = useQuery({
+  const { data } = useSuspenseQuery({
     queryKey: ["weather", lat, lon],
     queryFn: () => fetchWeatherData({ lat, lon }),
   });

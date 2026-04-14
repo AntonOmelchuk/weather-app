@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { fetchWeatherData } from "../../api";
 import { getLocalTime } from "../../utils";
@@ -12,7 +12,7 @@ type Props = {
 const CurrentWeather = ({ coordinates }: Props) => {
   const { lat, lon } = coordinates;
 
-  const { data } = useQuery({
+  const { data } = useSuspenseQuery({
     queryKey: ["weather", lat, lon],
     queryFn: () => fetchWeatherData({ lat, lon }),
   });
