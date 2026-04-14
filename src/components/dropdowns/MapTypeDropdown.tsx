@@ -8,29 +8,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { LOCATION_DROPDOWN_TITLE, LOCATIONS } from "@/constants";
+import { LOCATION_DROPDOWN_TITLE, MAP_TYPES } from "@/constants";
+import { formatMapType } from "@/utils";
 
 type Props = {
-  location: string;
-  setLocation: Dispatch<SetStateAction<string>>;
+  mapType: string;
+  setMapType: Dispatch<SetStateAction<string>>;
 };
 
-const LocationDropdown = ({ location, setLocation }: Props) => {
+const MapTypeDropdown = ({ mapType, setMapType }: Props) => {
   return (
     <div className="flex items-center gap-4">
-      <h1 className="text-2xl font-semibold">Location:</h1>
+      <h1 className="text-2xl font-semibold">Map Type:</h1>
       <Select
-        value={location}
-        onValueChange={(value) => setLocation(value as string)}
+        value={formatMapType(mapType)}
+        onValueChange={(value) => setMapType(value as string)}
       >
         <SelectTrigger className="w-45">
           <SelectValue placeholder={LOCATION_DROPDOWN_TITLE} />
         </SelectTrigger>
         <SelectContent className="z-100">
           <SelectGroup>
-            {LOCATIONS.map(({ name }) => (
-              <SelectItem key={name} value={name}>
-                {name}
+            {MAP_TYPES.map((type) => (
+              <SelectItem key={type} value={type} className="capitalize">
+                {formatMapType(type)}
               </SelectItem>
             ))}
           </SelectGroup>
@@ -40,4 +41,4 @@ const LocationDropdown = ({ location, setLocation }: Props) => {
   );
 };
 
-export default LocationDropdown;
+export default MapTypeDropdown;

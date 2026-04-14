@@ -47,3 +47,9 @@ export const formatAddInfoData = (
 
   return getLocalTime("UTC", data);
 };
+
+export const formatMapType = (mapType: string) => {
+  // remove _new suffix if present and capitalize first letter
+  const baseType = mapType.replace("_new", "");
+  return baseType.charAt(0).toUpperCase() + baseType.slice(1);
+};

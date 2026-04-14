@@ -1,18 +1,20 @@
 import "leaflet/dist/leaflet.css";
 
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
+
+const API_KEY = import.meta.env.VITE_OPENWEATHERMAP_API_KEY;
 
 type Props = {
   coordinates: { lat: number; lon: number };
   onMapClick: (lat: number, lon: number) => void;
+  mapType: string;
 };
 
-const Map = ({ coordinates, onMapClick }: Props) => {
+const Map = ({ coordinates, onMapClick, mapType }: Props) => {
   const { lat, lon } = coordinates;
 
   return (
     <MapContainer
-      key={`${lat}-${lon}`} // Додаємо ключ для примусового оновлення карти при зміні координат
       center={[lat, lon]}
       zoom={5}
       style={{
@@ -24,32 +26,38 @@ const Map = ({ coordinates, onMapClick }: Props) => {
         zIndex: 10,
       }}
     >
-      <MapClick onMapClick={onMapClick} />
+      <MapClick onMapClick={onMapClick} coordinates={coordinates} />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        zIndex={1}
       />
-      <Marker position={[lat, lon]}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
+      <TileLayer
+        url={`https://tile.openweathermap.org/map/${mapType}/{z}/{x}/{y}.png?appid=${API_KEY}`}
+        attribution='&copy; <a href="https://www.openweathermap.org/">OpenWeatherMap</a>'
+        zIndex={2}
+      />
+      <Marker position={[lat, lon]} />
     </MapContainer>
   );
 };
 
 const MapClick = ({
   onMapClick,
+  coordinates,
 }: {
   onMapClick: (lat: number, lon: number) => void;
+  coordinates: { lat: number; lon: number };
 }) => {
   const map = useMap();
+
+  const { lat, lon } = coordinates;
+
+  map.panTo([lat, lon]);
 
   map.on("click", ({ latlng }) => {
     const { lat, lng } = latlng;
     onMapClick(lat, lng);
-
-    map.panTo([lat, lng]);
   });
 
   return null;
