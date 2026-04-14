@@ -10,6 +10,7 @@ import LocationDropdown from "./components/dropdowns/LocationDropdown";
 import MapTypeDropdown from "./components/dropdowns/MapTypeDropdown";
 import Map from "./components/Map";
 import { LOCATION_DROPDOWN_TITLE, MAP_TYPES } from "./constants";
+import MapLegend from "./MapLegend";
 
 const App = () => {
   const [coords, setCoordinates] = useState<{
@@ -55,11 +56,14 @@ const App = () => {
         <LocationDropdown location={location} setLocation={setLocation} />
         <MapTypeDropdown mapType={mapType} setMapType={setMapType} />
       </div>
-      <Map
-        coordinates={coordinates}
-        onMapClick={onMapClick}
-        mapType={mapType}
-      />
+      <div className="relative">
+        <Map
+          coordinates={coordinates}
+          onMapClick={onMapClick}
+          mapType={mapType}
+        />
+        <MapLegend mapType={mapType} />
+      </div>
       <CurrentWeather coordinates={coordinates} />
       <HourlyForecast coordinates={coordinates} />
       <DailyForecast coordinates={coordinates} />
