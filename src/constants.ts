@@ -126,6 +126,17 @@ export const MAP_TYPES_COLORS: Record<
   },
 };
 
+export const POLLUTANT_NAME_MAPPING = {
+  SO2: "Sulfur dioxide",
+  NO2: "Nitrogen dioxide",
+  PM10: "Particulate matter 10",
+  PM2_5: "Fine particles matter",
+  O3: "Ozone",
+  CO: "Carbon monoxide",
+  NO: "Nitrogen monoxide",
+  NH3: "Ammonia",
+};
+
 export const AIR_QUALITY_LEVELS = {
   poor: "poor",
   moderate: "moderate",

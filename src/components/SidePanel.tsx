@@ -3,9 +3,15 @@ import clsx from "clsx";
 import { Suspense } from "react";
 
 import { getAirPollution } from "@/api";
-import { AIR_QUALITY_LEVELS, AIR_QUALITY_RANGES } from "@/constants";
+import {
+  AIR_QUALITY_LEVELS,
+  AIR_QUALITY_RANGES,
+  POLLUTANT_NAME_MAPPING,
+} from "@/constants";
 
+import InfoIcon from "../assets/info.svg?react";
 import Card from "./cards/Card";
+import CustomTooltilp from "./CustomTooltilp";
 import { Progress } from "./ui/progress";
 
 type Props = {
@@ -14,6 +20,11 @@ type Props = {
     lon: number;
   };
 };
+
+// Tooltip text for AQI:
+// Air Quality Index.
+// Possible values: 1, 2, 3, 4, 5.
+// Where 1 = Good, 2 = Fair, 3 = Moderate, 4 = Poor, 5 = Very Poor.
 
 const SidePanel = ({ coordinates }: Props) => {
   return (
@@ -42,7 +53,15 @@ const AirPollution = ({ coordinates }: Props) => {
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-semibold">Air Pollution</h1>
       <h1 className="text-5xl font-semibold">{aqi}</h1>
-      <h1 className="text-2xl font-semibold">AQI</h1>
+      <div className="flex items-center gap-2">
+        <h1 className="text-2xl font-semibold">AQI</h1>
+        <CustomTooltilp
+          Trigger={<InfoIcon className="size-4 invert" />}
+          text="Air Quality Index.
+            Possible values: 1, 2, 3, 4, 5.
+            Where 1 = Good, 2 = Fair, 3 = Moderate, 4 = Poor, 5 = Very Poor."
+        />
+      </div>
       {Object.entries(components).map(([key, value]) => {
         const pollutant =
           AIR_QUALITY_RANGES[
@@ -53,6 +72,11 @@ const AirPollution = ({ coordinates }: Props) => {
         const max = Math.max(pollutant.very_poor.min, value);
         const percentage = (value / max) * 100;
 
+        const pollutantName =
+          POLLUTANT_NAME_MAPPING[
+            key.toUpperCase() as keyof typeof POLLUTANT_NAME_MAPPING
+          ];
+
         return (
           <Card
             key={key}
@@ -60,7 +84,13 @@ const AirPollution = ({ coordinates }: Props) => {
             className="hover:scale-105 transition-transform duration-300 from-sidebar-accent to-sidebar-accent/60"
           >
             <div className="flex justify-between">
-              <span className="text-lg font-bold capitalize">{key}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-lg font-bold capitalize">{key}</span>
+                <CustomTooltilp
+                  Trigger={<InfoIcon className="size-4 invert" />}
+                  text={`Concentration of ${pollutantName}`}
+                />
+              </div>
               <span className="text-lg font-semibold">{value}</span>
             </div>
             <Progress value={percentage} />
