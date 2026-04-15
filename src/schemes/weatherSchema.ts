@@ -89,4 +89,4 @@ export const OpenWeatherSchema = z.object({
   daily: z.array(DailyWeatherSchema),
 });
 
-export type OpenWeather = z.infer<typeof OpenWeatherSchema>;
+export type OpenWeatherSchemaType = z.infer<typeof OpenWeatherSchema>;

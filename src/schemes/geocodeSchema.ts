@@ -8,3 +8,5 @@ export const GeocodeSchema = z.object({
   country: z.string(),
   state: z.string().optional(),
 });
+
+export type GeocodeSchemaType = z.infer<typeof GeocodeSchema>;

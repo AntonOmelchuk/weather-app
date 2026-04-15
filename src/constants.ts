@@ -125,3 +125,56 @@ export const MAP_TYPES_COLORS: Record<
     ],
   },
 };
+
+export const AIR_QUALITY_LEVELS = {
+  poor: "poor",
+  moderate: "moderate",
+  good: "good",
+  fair: "fair",
+  very_poor: "very_poor",
+};
+
+export const AIR_QUALITY_RANGES = {
+  SO2: {
+    good: { min: 0, max: 20 },
+    fair: { min: 20, max: 80 },
+    moderate: { min: 80, max: 250 },
+    poor: { min: 250, max: 350 },
+    very_poor: { min: 350, max: null },
+  },
+  NO2: {
+    good: { min: 0, max: 40 },
+    fair: { min: 40, max: 70 },
+    moderate: { min: 70, max: 150 },
+    poor: { min: 150, max: 200 },
+    very_poor: { min: 200, max: null },
+  },
+  PM10: {
+    good: { min: 0, max: 20 },
+    fair: { min: 20, max: 50 },
+    moderate: { min: 50, max: 100 },
+    poor: { min: 100, max: 200 },
+    very_poor: { min: 200, max: null },
+  },
+  PM2_5: {
+    good: { min: 0, max: 10 },
+    fair: { min: 10, max: 25 },
+    moderate: { min: 25, max: 50 },
+    poor: { min: 50, max: 75 },
+    very_poor: { min: 75, max: null },
+  },
+  O3: {
+    good: { min: 0, max: 60 },
+    fair: { min: 60, max: 100 },
+    moderate: { min: 100, max: 140 },
+    poor: { min: 140, max: 180 },
+    very_poor: { min: 180, max: null },
+  },
+  CO: {
+    good: { min: 0, max: 4400 },
+    fair: { min: 4400, max: 9400 },
+    moderate: { min: 9400, max: 12400 },
+    poor: { min: 12400, max: 15400 },
+    very_poor: { min: 15400, max: null },
+  },
+};
