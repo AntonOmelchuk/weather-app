@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Suspense, useEffect, useState } from "react";
 
 import { getGeocode } from "./api";
+import MenuIcon from "./assets/menu.svg?react";
 import AdditionalInfo from "./components/cards/AdditionalInfo";
 import CurrentWeather from "./components/cards/CurrentWeather";
 import DailyForecast from "./components/cards/DailyForecast";
@@ -24,6 +25,7 @@ const App = () => {
   }>({ lat: 41.8933203, lon: 12.4829321 }); // Default to Rome
   const [location, setLocation] = useState<string>(LOCATION_DROPDOWN_TITLE);
   const [mapType, setMapType] = useState<string>(MAP_TYPES[0]);
+  const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
 
   const { data: geocodeData } = useQuery({
     queryKey: ["geocode", location],
@@ -58,9 +60,14 @@ const App = () => {
   return (
     <>
       <div className="flex flex-col gap-8">
-        <div className="flex gap-8 p-4">
-          <LocationDropdown location={location} setLocation={setLocation} />
-          <MapTypeDropdown mapType={mapType} setMapType={setMapType} />
+        <div className="flex justify-between gap-8 pr-4">
+          <div className="flex gap-8 p-4">
+            <LocationDropdown location={location} setLocation={setLocation} />
+            <MapTypeDropdown mapType={mapType} setMapType={setMapType} />
+          </div>
+          <button onClick={() => setIsSidePanelOpen(true)}>
+            <MenuIcon className="size-8 invert ml-auto cursor-pointer" />
+          </button>
         </div>
         <div className="relative">
           <Map
@@ -83,7 +90,11 @@ const App = () => {
           <AdditionalInfo coordinates={coordinates} />
         </Suspense>
       </div>
-      <SidePanel coordinates={coordinates} />
+      <SidePanel
+        coordinates={coordinates}
+        isOpen={isSidePanelOpen}
+        setIsOpen={setIsSidePanelOpen}
+      />
     </>
   );
 };

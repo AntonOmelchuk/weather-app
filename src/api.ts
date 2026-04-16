@@ -26,6 +26,7 @@ export const fetchWeatherData = async ({
   }
 
   const data = await response.json();
+
   return OpenWeatherSchema.parse(data);
 };
 

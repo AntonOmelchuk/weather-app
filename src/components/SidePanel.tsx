@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import { Suspense } from "react";
+import { type Dispatch, type SetStateAction, Suspense } from "react";
 
 import { getAirPollution } from "@/api";
 import {
@@ -9,9 +9,11 @@ import {
   POLLUTANT_NAME_MAPPING,
 } from "@/constants";
 
+import ChevronIcon from "../assets/chevron-left.svg?react";
 import InfoIcon from "../assets/info.svg?react";
 import Card from "./cards/Card";
 import CustomTooltilp from "./CustomTooltilp";
+import SidePanelSkeleton from "./skeletons/SidePanelSkeleton";
 import { Progress } from "./ui/progress";
 
 type Props = {
@@ -19,26 +21,30 @@ type Props = {
     lat: number;
     lon: number;
   };
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-// Tooltip text for AQI:
-// Air Quality Index.
-// Possible values: 1, 2, 3, 4, 5.
-// Where 1 = Good, 2 = Fair, 3 = Moderate, 4 = Poor, 5 = Very Poor.
-
-const SidePanel = ({ coordinates }: Props) => {
+const SidePanel = ({ coordinates, isOpen, setIsOpen }: Props) => {
+  const { lat, lon } = coordinates;
   return (
-    <div className="fixed top-0 right-0 h-screen w-90 shadow-md bg-sidebar z-30 py-8 px-4 overflow-y-scroll">
-      <Suspense fallback={<div className="p-4">Loading...</div>}>
-        <AirPollution coordinates={coordinates} />
+    <div
+      className={clsx(
+        "fixed top-0 right-0 h-screen w-90 shadow-md bg-sidebar z-30 py-8 px-4 overflow-y-scroll transition-transform duration-300",
+        isOpen ? "translate-x-0" : "translate-x-full",
+      )}
+    >
+      <button onClick={() => setIsOpen(false)}>
+        <ChevronIcon className="size-8 invert -ml-2 cursor-pointer" />
+      </button>
+      <Suspense fallback={<SidePanelSkeleton />}>
+        <AirPollution lat={lat} lon={lon} />
       </Suspense>
     </div>
   );
 };
 
-const AirPollution = ({ coordinates }: Props) => {
-  const { lat, lon } = coordinates;
-
+const AirPollution = ({ lat, lon }: Props["coordinates"]) => {
   const { data } = useSuspenseQuery({
     queryKey: ["airPollution", lat, lon],
     queryFn: () => getAirPollution({ lat, lon }),
@@ -56,7 +62,7 @@ const AirPollution = ({ coordinates }: Props) => {
       <div className="flex items-center gap-2">
         <h1 className="text-2xl font-semibold">AQI</h1>
         <CustomTooltilp
-          Trigger={<InfoIcon className="size-4 invert" />}
+          Trigger={<InfoIcon className="size-3 invert" />}
           text="Air Quality Index.
             Possible values: 1, 2, 3, 4, 5.
             Where 1 = Good, 2 = Fair, 3 = Moderate, 4 = Poor, 5 = Very Poor."
@@ -87,7 +93,7 @@ const AirPollution = ({ coordinates }: Props) => {
               <div className="flex items-center gap-2">
                 <span className="text-lg font-bold capitalize">{key}</span>
                 <CustomTooltilp
-                  Trigger={<InfoIcon className="size-4 invert" />}
+                  Trigger={<InfoIcon className="size-3 invert" />}
                   text={`Concentration of ${pollutantName}`}
                 />
               </div>
