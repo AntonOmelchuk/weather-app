@@ -42,7 +42,7 @@ export const formatAddInfoData = (
   if (type === "wind_deg") {
     return Arrow({
       style: { transform: `rotate(${data}deg)` },
-      className: "size-4 invert",
+      className: "size-4",
     });
   }
 

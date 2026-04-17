@@ -35,7 +35,7 @@ const SidePanel = ({ coordinates, isOpen, setIsOpen }: Props) => {
       )}
     >
       <button onClick={() => setIsOpen(false)}>
-        <ChevronIcon className="size-8 invert -ml-2 cursor-pointer" />
+        <ChevronIcon className="size-8 -ml-2 cursor-pointer" />
       </button>
       <Suspense fallback={<SidePanelSkeleton />}>
         <AirPollution lat={lat} lon={lon} />
@@ -62,7 +62,7 @@ const AirPollution = ({ lat, lon }: Props["coordinates"]) => {
       <div className="flex items-center gap-2">
         <h1 className="text-2xl font-semibold">AQI</h1>
         <CustomTooltilp
-          Trigger={<InfoIcon className="size-3 invert" />}
+          Trigger={<InfoIcon className="size-3" />}
           text="Air Quality Index.
             Possible values: 1, 2, 3, 4, 5.
             Where 1 = Good, 2 = Fair, 3 = Moderate, 4 = Poor, 5 = Very Poor."
@@ -93,7 +93,7 @@ const AirPollution = ({ lat, lon }: Props["coordinates"]) => {
               <div className="flex items-center gap-2">
                 <span className="text-lg font-bold capitalize">{key}</span>
                 <CustomTooltilp
-                  Trigger={<InfoIcon className="size-3 invert" />}
+                  Trigger={<InfoIcon className="size-3" />}
                   text={`Concentration of ${pollutantName}`}
                 />
               </div>

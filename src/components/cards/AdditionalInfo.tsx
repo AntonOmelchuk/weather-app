@@ -30,7 +30,7 @@ const AdditionalInfo = ({ coordinates }: Props) => {
           <div key={label} className="flex justify-between">
             <div className="flex gap-4">
               <span className="text-gray-500">{label}</span>
-              <Icon className="w-6 h-6 invert" />
+              <Icon className="w-6 h-6" />
             </div>
             <span>{formatAddInfoData(current?.[value], value)}</span>
           </div>

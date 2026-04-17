@@ -16,7 +16,9 @@ import AdditionalSkeleton from "./components/skeletons/AdditionalSkeleton";
 import CurrentSkeleton from "./components/skeletons/CurrentSkeleton";
 import DailySkeleton from "./components/skeletons/DailySkeleton";
 import HourlySkeleton from "./components/skeletons/HourlySkeleton";
+import ThemeToggle from "./components/ThemeToggle";
 import { LOCATION_DROPDOWN_TITLE, MAP_TYPES } from "./constants";
+import ThemeProvider from "./ThemeProvider";
 
 const App = () => {
   const [coords, setCoordinates] = useState<{
@@ -58,16 +60,19 @@ const App = () => {
     location === LOCATION_DROPDOWN_TITLE ? coords : { lat, lon };
 
   return (
-    <>
+    <ThemeProvider>
       <div className="flex flex-col gap-8">
-        <div className="flex justify-between gap-8 pr-4">
+        <div className="flex flex-col justify-between gap-0 pr-4 xs:flex-row">
           <div className="flex flex-col lg:flex-row gap-2 lg:gap-8 p-4">
             <LocationDropdown location={location} setLocation={setLocation} />
             <MapTypeDropdown mapType={mapType} setMapType={setMapType} />
           </div>
-          <button onClick={() => setIsSidePanelOpen(true)}>
-            <MenuIcon className="size-8 invert ml-auto cursor-pointer hidden xs:block" />
-          </button>
+          <div className="flex gap-4">
+            <ThemeToggle />
+            <button onClick={() => setIsSidePanelOpen(true)}>
+              <MenuIcon className="size-8 ml-auto cursor-pointer hidden sm:block" />
+            </button>
+          </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-0 xs:gap-4">
           <div className="relative col-span-1 md:col-span-2">
@@ -105,7 +110,7 @@ const App = () => {
         isOpen={isSidePanelOpen}
         setIsOpen={setIsSidePanelOpen}
       />
-    </>
+    </ThemeProvider>
   );
 };
 
