@@ -19,12 +19,14 @@ type Props = {
 const MapTypeDropdown = ({ mapType, setMapType }: Props) => {
   return (
     <div className="flex items-center gap-4">
-      <h1 className="text-2xl font-semibold">Map Type:</h1>
+      <h1 className="text-sm xs:text-2xl font-semibold whitespace-nowrap">
+        Map Type:
+      </h1>
       <Select
         value={formatMapType(mapType)}
         onValueChange={(value) => setMapType(value as string)}
       >
-        <SelectTrigger className="w-45">
+        <SelectTrigger className="w-38 xl:w-45">
           <SelectValue placeholder={LOCATION_DROPDOWN_TITLE} />
         </SelectTrigger>
         <SelectContent className="z-100">

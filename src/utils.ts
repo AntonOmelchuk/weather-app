@@ -1,8 +1,13 @@
 import Arrow from "./assets/arrow.svg?react";
 
-export const formatDateToDay = (timestamp: number): string => {
+export const formatDateToDay = (
+  timestamp: number,
+  isSmallWidth?: boolean,
+): string => {
   const date = new Date(timestamp * 1000);
-  return date.toLocaleDateString("en-US", { weekday: "long" });
+  return date.toLocaleDateString("en-US", {
+    weekday: isSmallWidth ? "short" : "long",
+  });
 };
 
 export const formatDateToHour = (timestamp: number): string => {

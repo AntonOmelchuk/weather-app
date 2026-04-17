@@ -16,7 +16,7 @@ const Card = ({ children, title, className, childrenClassName }: Props) => {
         className,
       )}
     >
-      <h2 className="text-2xl font-semibold">{title}</h2>
+      <h2 className="text-xl xs:text-2xl font-semibold">{title}</h2>
       <div
         className={clsx(
           childrenClassName,

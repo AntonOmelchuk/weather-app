@@ -3,6 +3,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { fetchWeatherData } from "../../api";
 import { getLocalTime } from "../../utils";
 import Card from "./Card";
+import CurrentWeatherBlock from "./CurrentWeatherBlock";
 import WeatherIcon from "./WeatherIcon";
 
 type Props = {
@@ -38,8 +39,8 @@ const CurrentWeather = ({ coordinates }: Props) => {
       title="Current Weather"
       childrenClassName="flex flex-col items-center"
     >
-      <div className="flex flex-col gap-6 items-center">
-        <h2 className="text-6xl font-semibold text-center">
+      <div className="flex flex-col gap-2 xs:gap-6 items-center">
+        <h2 className="text-4xl xs:text-6xl font-semibold text-center">
           {Math.round(temp)}°C
         </h2>
         <WeatherIcon
@@ -47,29 +48,30 @@ const CurrentWeather = ({ coordinates }: Props) => {
           className="size-14"
           alt={weather[0].description}
         />
-        <h3 className="capitalize text-xl">{weather[0].description}</h3>
+        <h3 className="text:sm capitalize xs:text-xl">
+          {weather[0].description}
+        </h3>
       </div>
 
       <div className="flex flex-col gap-2 mt-4">
-        <p className="text-xl font-semibold text-center">Local Time:</p>
-        <h3 className="text-4xl font-semibold text-center">
+        <p className="text:sm xs:text-xl font-semibold text-center">
+          Local Time:
+        </p>
+        <h3 className="text-2xl xs:text-4xl font-semibold text-center">
           {getLocalTime(timezone, dt)}
         </h3>
       </div>
 
       <div className="flex justify-between w-full">
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-gray-500">Feels Like</p>
-          <p className="text-2xl font-bold">{Math.round(feels_like)}°C</p>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-gray-500">Humidity</p>
-          <p className="text-2xl font-bold">{Math.round(humidity)}%</p>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-gray-500">Wind</p>
-          <p className="text-2xl font-bold">{wind_speed} m/s</p>
-        </div>
+        <CurrentWeatherBlock
+          title="Feels Like"
+          data={`${Math.round(feels_like)}°C`}
+        />
+        <CurrentWeatherBlock
+          title="Humidity"
+          data={`${Math.round(humidity)}%`}
+        />
+        <CurrentWeatherBlock title="Wind" data={`${wind_speed} m/s`} />
       </div>
     </Card>
   );

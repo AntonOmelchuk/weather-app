@@ -19,11 +19,19 @@ const DailyForecast = ({ coordinates }: Props) => {
 
   const { daily } = data || {};
 
+  const isSmallWidth = window.innerWidth < 500;
+
   return (
-    <Card title="Daily Forecast" childrenClassName="flex flex-col gap-2">
+    <Card
+      title="Daily Forecast"
+      className="pb-13"
+      childrenClassName="flex flex-col gap-2"
+    >
       {daily?.map(({ dt, weather, temp: { day, min, max } }) => (
         <div key={dt} className="flex justify-between">
-          <p className="w-9">{formatDateToDay(dt)}</p>
+          <p className="text-sm xl:text-xl w-9">
+            {formatDateToDay(dt, isSmallWidth)}
+          </p>
           <WeatherIcon icon={weather[0].icon} alt={weather[0].description} />
           <p>{Math.round(day)}°C</p>
           <p className="text-gray-500/75">{Math.round(min)}°C</p>

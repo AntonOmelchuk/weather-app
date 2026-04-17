@@ -8,9 +8,9 @@ const CurrentSkeleton = () => {
       childrenClassName="flex flex-col items-center"
     >
       <div className="flex flex-col gap-6 items-center">
-        <Skeleton className="w-30 h-15" />
+        <Skeleton className="w-30 h-16" />
         <Skeleton className="size-14 rounded-full" />
-        <Skeleton className="w-36 h-7" />
+        <Skeleton className="w-36 h-8" />
       </div>
 
       <div className="flex flex-col gap-2 mt-4">

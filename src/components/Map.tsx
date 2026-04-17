@@ -21,13 +21,13 @@ const Map = ({ coordinates, onMapClick, mapType }: Props) => {
       center={[lat, lon]}
       zoom={5}
       style={{
-        width: "98%",
-        height: "500px",
-        margin: "0 auto",
+        marginLeft: "16px",
+        marginRight: "16px",
         borderRadius: "8px",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         zIndex: 10,
       }}
+      className="h-75 xs:h-125"
     >
       <MapClick onMapClick={onMapClick} coordinates={coordinates} />
       <MapTileLayer />

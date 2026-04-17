@@ -3,7 +3,11 @@ import { Skeleton } from "../ui/skeleton";
 
 const DailySkeleton = () => {
   return (
-    <Card title="Daily Forecast" childrenClassName="flex flex-col gap-2">
+    <Card
+      title="Daily Forecast"
+      className="pb-13"
+      childrenClassName="flex flex-col gap-2"
+    >
       {Array.from({ length: 8 }).map((_, index) => (
         <div key={index} className="flex justify-between">
           <Skeleton className="w-9 h-8" />

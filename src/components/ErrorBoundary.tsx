@@ -1,5 +1,7 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
 
+import { Button } from "./ui/button";
+
 interface ErrorBoundaryProps {
   children: ReactNode;
 }
@@ -35,6 +37,9 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
               An unexpected error occurred. Please refresh the page or try again
               later.
             </p>
+            <Button onClick={() => window.location.reload()}>
+              Refresh page
+            </Button>
             {this.state.error && (
               <pre className="max-w-full overflow-x-auto rounded-lg bg-slate-100 p-4 text-left text-xs text-slate-700">
                 {this.state.error.message}

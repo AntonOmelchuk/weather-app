@@ -61,34 +61,44 @@ const App = () => {
     <>
       <div className="flex flex-col gap-8">
         <div className="flex justify-between gap-8 pr-4">
-          <div className="flex gap-8 p-4">
+          <div className="flex flex-col lg:flex-row gap-2 lg:gap-8 p-4">
             <LocationDropdown location={location} setLocation={setLocation} />
             <MapTypeDropdown mapType={mapType} setMapType={setMapType} />
           </div>
           <button onClick={() => setIsSidePanelOpen(true)}>
-            <MenuIcon className="size-8 invert ml-auto cursor-pointer" />
+            <MenuIcon className="size-8 invert ml-auto cursor-pointer hidden xs:block" />
           </button>
         </div>
-        <div className="relative">
-          <Map
-            coordinates={coordinates}
-            onMapClick={onMapClick}
-            mapType={mapType}
-          />
-          <MapLegend mapType={mapType} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 xs:gap-4">
+          <div className="relative col-span-1 md:col-span-2">
+            <Map
+              coordinates={coordinates}
+              onMapClick={onMapClick}
+              mapType={mapType}
+            />
+            <MapLegend mapType={mapType} />
+          </div>
+          <div className="col-span-1">
+            <Suspense fallback={<CurrentSkeleton />}>
+              <CurrentWeather coordinates={coordinates} />
+            </Suspense>
+          </div>
+          <div className="col-span-1">
+            <Suspense fallback={<DailySkeleton />}>
+              <DailyForecast coordinates={coordinates} />
+            </Suspense>
+          </div>
+          <div className="col-span-1">
+            <Suspense fallback={<HourlySkeleton />}>
+              <HourlyForecast coordinates={coordinates} />
+            </Suspense>
+          </div>
+          <div className="col-span-1">
+            <Suspense fallback={<AdditionalSkeleton />}>
+              <AdditionalInfo coordinates={coordinates} />
+            </Suspense>
+          </div>
         </div>
-        <Suspense fallback={<CurrentSkeleton />}>
-          <CurrentWeather coordinates={coordinates} />
-        </Suspense>
-        <Suspense fallback={<HourlySkeleton />}>
-          <HourlyForecast coordinates={coordinates} />
-        </Suspense>
-        <Suspense fallback={<DailySkeleton />}>
-          <DailyForecast coordinates={coordinates} />
-        </Suspense>
-        <Suspense fallback={<AdditionalSkeleton />}>
-          <AdditionalInfo coordinates={coordinates} />
-        </Suspense>
       </div>
       <SidePanel
         coordinates={coordinates}
